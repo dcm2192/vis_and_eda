@@ -44,4 +44,38 @@ gg_weather_scatterplot =
 gg_weather_scatterplot
 ```
 
+Fancy scatterplots
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = 0.3, size = 0.8) + 
+  geom_smooth(se = FALSE)
+```
+
+Where you define aesthetics matter
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = 0.3, size = 0.8) + 
+  geom_smooth(se = FALSE)
+```
+
+Use facetime real quick
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = 0.3) + 
+  geom_smooth(se = FALSE) + 
+  facet_grid(. ~ name)
+```
+
+Make a somewhat more interesting scatterplot
+```{r}
+weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name, size = prcp)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE) + 
+  facet_grid(. ~ name)
+```
+
 
