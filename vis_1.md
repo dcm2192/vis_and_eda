@@ -170,3 +170,21 @@ weather_df |>
     ## (`geom_point()`).
 
 ![](vis_1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+Learning assessment plot
+
+``` r
+weather_df |> 
+  filter(name == "CentralPark_NY") |>
+  mutate(
+    tmax_fahr = tmax * (9/5) + 32, 
+    tmin_fahr = tmin * (9/5) + 32
+  ) |> 
+  ggplot(aes(x = tmin_fahr, y = tmax_fahr)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](vis_1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->

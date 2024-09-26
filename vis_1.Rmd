@@ -78,4 +78,16 @@ weather_df |>
   facet_grid(. ~ name)
 ```
 
+Learning assessment plot
+```{r}
+weather_df |> 
+  filter(name == "CentralPark_NY") |>
+  mutate(
+    tmax_fahr = tmax * (9/5) + 32, 
+    tmin_fahr = tmin * (9/5) + 32
+  ) |> 
+  ggplot(aes(x = tmin_fahr, y = tmax_fahr)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
 
