@@ -111,3 +111,49 @@ weather_df |>
   geom_point()
 ```
 
+## Univariate plots
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, fill = name)) + 
+  geom_histogram(position = "dodge")
+```
+
+how to fix this -- try facet_grid
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, fill = name)) + 
+  geom_histogram() + 
+  facet_grid(. ~ name)
+```
+
+try density plot instead of histogram
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, fill = name)) + 
+  geom_density(alpha = 0.3)
+```
+
+box plot
+```{r}
+weather_df |> 
+  ggplot(aes(x = name, y = tmin, fill = name)) + 
+  geom_boxplot()
+```
+
+violin plots
+```{r}
+weather_df |> 
+  ggplot(aes(x = name, y = tmin, fill = name)) + 
+  geom_violin()
+```
+
+ridge plot
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmin, y = name)) + 
+  geom_density_ridges()
+```
+
+
+
+
