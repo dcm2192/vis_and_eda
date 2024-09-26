@@ -154,6 +154,59 @@ weather_df |>
   geom_density_ridges()
 ```
 
+Learning assessment 2
+
+First a density plot:
+```{r}
+ggplot(weather_df, aes(x = prcp)) + 
+  geom_density(aes(fill = name), alpha = .5) 
+```
+  
+Next a ridge plot:
+```{r}
+ggplot(weather_df, aes(x = prcp, y = name)) + 
+  geom_density_ridges(scale = .85)
+```
+
+Last a boxplot:
+```{r}
+ggplot(weather_df, aes(y = prcp, x = name)) + 
+  geom_boxplot() 
+```
+
+```{r}
+weather_df |> 
+  filter(prcp > 0) |> 
+  ggplot(aes(x = prcp, y = name)) + 
+  geom_density_ridges(scale = .85)
+```
+
+```{r}
+weather_df |> 
+  filter(prcp > 10, prcp < 1000) |> 
+  ggplot(aes(x = prcp, fill = name)) + 
+  geom_density(alpha = .3) 
+```
+
+## Saving and embedding plots
+
+Saving plots
+```{r}
+ggp_weather = 
+  weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point()
+
+ggsave("ggp_weather.pdf", ggp_weather, width = 8, height = 6)
+```
+
+Embedding plots
+```{r, fig.width = 6, fig.asp = 0.6}
+weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point()
+```
+
 
 
 

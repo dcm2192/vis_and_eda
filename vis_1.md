@@ -314,3 +314,92 @@ weather_df |>
     ## (`stat_density_ridges()`).
 
 ![](vis_1_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+Learning assessment 2
+
+First a density plot:
+
+``` r
+ggplot(weather_df, aes(x = prcp)) + 
+  geom_density(aes(fill = name), alpha = .5) 
+```
+
+    ## Warning: Removed 15 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](vis_1_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+Next a ridge plot:
+
+``` r
+ggplot(weather_df, aes(x = prcp, y = name)) + 
+  geom_density_ridges(scale = .85)
+```
+
+    ## Picking joint bandwidth of 9.22
+
+    ## Warning: Removed 15 rows containing non-finite outside the scale range
+    ## (`stat_density_ridges()`).
+
+![](vis_1_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+Last a boxplot:
+
+``` r
+ggplot(weather_df, aes(y = prcp, x = name)) + 
+  geom_boxplot() 
+```
+
+    ## Warning: Removed 15 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](vis_1_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+
+``` r
+weather_df |> 
+  filter(prcp > 0) |> 
+  ggplot(aes(x = prcp, y = name)) + 
+  geom_density_ridges(scale = .85)
+```
+
+    ## Picking joint bandwidth of 20.6
+
+![](vis_1_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+
+``` r
+weather_df |> 
+  filter(prcp > 10, prcp < 1000) |> 
+  ggplot(aes(x = prcp, fill = name)) + 
+  geom_density(alpha = .3) 
+```
+
+![](vis_1_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+
+## Saving and embedding plots
+
+Saving plots
+
+``` r
+ggp_weather = 
+  weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point()
+
+ggsave("ggp_weather.pdf", ggp_weather, width = 8, height = 6)
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+Embedding plots
+
+``` r
+weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point()
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](vis_1_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
