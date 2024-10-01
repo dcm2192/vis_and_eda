@@ -63,3 +63,102 @@ weather_df |>
   viridis::scale_color_viridis(discrete = TRUE)
 ```
 
+## Themes
+```{r}
+ggp_scatterplot <- 
+  weather_df |> 
+  ggplot(aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = .3) + 
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maxiumum daily temperature (C)",
+    color = "Location",
+    caption = "Data from the rnoaa package") + 
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r}
+ggp_scatterplot + 
+  theme_bw() + 
+  theme(legend.position = "bottom")
+```
+
+Order matters
+```{r}
+ggp_scatterplot + 
+  theme(legend.position = "bottom") + 
+  theme_bw()
+```
+
+```{r}
+ggp_scatterplot + 
+  theme(legend.position = "bottom") + 
+  ggthemes::theme_excel()
+```
+
+New scatterplot
+```{r}
+weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name, size = prcp)) + 
+  geom_point(alpha = 0.3) + 
+  geom_smooth(se = FALSE) + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  labs(
+    x = "Date", 
+    y = "Maximum Temp (C)", 
+    title = "Seasonal Variation in Max Temp", 
+    size = "Precipitation"
+  ) + 
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+```
+
+Extra bonus stuff in `ggplot`
+
+Use different datasets in different `geom`s
+```{r}
+central_park_df <- 
+  weather_df |> 
+  filter(name == "CentralPark_NY")
+
+molokai_df <- 
+  weather_df |> 
+  filter(name == "Molokai_HI")
+
+molokai_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point() + 
+  geom_line(data = central_park_df)
+```
+
+## Multiple panels
+```{r}
+weather_df |> 
+  ggplot(aes(x = tmax, fill = name)) + 
+  geom_density() + 
+  facet_grid(. ~ name)
+```
+
+```{r}
+ggp_tmax_tmin <- 
+  weather_df |> 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = 0.3)
+
+ggp_tmax_density <- 
+  weather_df |> 
+  ggplot(aes(x = tmax, fill = name)) + 
+  geom_density(alpha = 0.3)
+
+ggp_tmax_date <- 
+  weather_df |> 
+  ggplot(aes(x = date, y = tmax, color = name)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+(ggp_tmax_tmin + ggp_tmax_density) / ggp_tmax_date
+```
+
+## Data manipulation
+
